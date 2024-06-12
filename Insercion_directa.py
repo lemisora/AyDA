@@ -3,6 +3,8 @@
 #Todo esto sucede 10 veces
 
 import random
+import numpy as np
+import matplotlib.pyplot as plt
 
 #Devuelve una lista de enteros de tamaño n en orden ascendente
 def bestA(n):
@@ -49,55 +51,65 @@ def showList(lista):
 	for number in A:
 		print(number, end = " ")
 
-opcion = input("Escribe 1 para ejecutar el programa con el mejor de los casos (ordenar arreglo ya ordenado)\nEscribe 2 para ejecutar con el peor de los casos (arreglo ordenado descendentemente)\nEscribe 3 para ejecutar con caso promedio (arreglo con datos en orden aleatorio)\n")
+#n = int(10)	#Cant de enteros que habrá en los arreglos
+n = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+n2 = n
+tiempoEjecucionesMejor = []
+tiempoEjecucionesPeor = []
+# tiempoEjecucionesPromedio = []
 
-tam_n = [10,20,30,40,50,60,70, 80,90,100]
-n = int(10)	#Cant de enteros que habrá en los arreglos
-totalOperaciones = 0
-
-while 1:
-	match opcion:
-		case '1':
-			for i in range(0,10):
-				A = bestA(n)
-				print("\n\nArreglo antes de ser ordenado")
-				showList(A)
+for n in n:
+	totalOperaciones = 0
+	A = bestA(n)
+	print("\n\nArreglo antes de ser ordenado")
+	showList(A)				
+	totalOperaciones += insertionSort(A)
+	print("\nArreglo después de ser ordenado")
+	showList(A)
+	tiempoEjecucionesMejor.append(totalOperaciones)
+				
+	print("\n\nSe han realizado ", totalOperaciones, "operaciones\n")
+			
+n = n2
+for n in n:
+	totalOperaciones = 0
+	A = worstA(n)
+	print("\nArreglo antes de ser ordenado")
+	showList(A)
 					
-				totalOperaciones = totalOperaciones + insertionSort(A)
+	totalOperaciones = totalOperaciones + insertionSort(A)
 
-				print("\nArreglo después de ser ordenado")
-				showList(A)
-
-				print("\n\nSe han realizado ", totalOperaciones, "operaciones\n")
-			break
-		case '2':
-			for i in range(0,10):
-				A = worstA(n)
-				print("\nArreglo antes de ser ordenado")
-				showList(A)
+	print("\n\nArreglo después de ser ordenado")
+	showList(A)
+	tiempoEjecucionesPeor.append(totalOperaciones)
+	print("\n\nSe han realizado ", totalOperaciones, "operaciones\n")
+		
+# n = n2
+# for n in n:
+# 	totalOperaciones = 0
+# 	A = randomA(n)
+# 	print("\n\nArreglo antes de ser ordenado")
+# 	showList(A)
 					
-				totalOperaciones = totalOperaciones + insertionSort(A)
+# 	totalOperaciones = totalOperaciones + insertionSort(A)
 
-				print("\n\nArreglo después de ser ordenado")
-				showList(A)
+# 	print("\nArreglo después de ser ordenado")
+# 	showList(A)
+# 	tiempoEjecucionesPromedio.append(totalOperaciones)
+# 	print("\n\nSe han realizado ", totalOperaciones, "operaciones\n")
 
-				print("\n\nSe han realizado ", totalOperaciones, "operaciones\n")
-			break
-		case '3':
-			for i in range(0,10):
-				A = randomA(n)
-				print("\n\nArreglo antes de ser ordenado")
-				showList(A)
-					
-				totalOperaciones = totalOperaciones + insertionSort(A)
+n = n2
+#Graficar resultados
+plt.figure(figsize=(10, 6))
 
-				print("\nArreglo después de ser ordenado")
-				showList(A)
+plt.plot(n, tiempoEjecucionesMejor, marker='o', label='Mejor caso')
+plt.plot(n, tiempoEjecucionesPeor, marker='o', label='Peor caso')
+# plt.plot(n, tiempoEjecucionesPeor, marker='o', label='Promedio')
 
-				print("\n\nSe han realizado ", totalOperaciones, "operaciones\n")
-			break
-		case _:
-			print("Opción no válida")
-			opcion = input("Escribe 1 para ejecutar el programa con el mejor de los casos (ordenar arreglo ya ordenado)\nEscribe 2 para ejecutar con el peor de los casos (arreglo ordenado descendentemente)\nEscribe 2 para ejecutar con caso promedio (arreglo con datos en orden aleatorio)\n")
-
-
+plt.xlabel('Cantidad de datos')
+plt.ylabel('Cantidad de instrucciones ejecutadas')
+plt.title('Tiempo de ejecución de Insertion Sort')
+plt.xticks(n)
+plt.legend()
+plt.grid(True)
+plt.show()

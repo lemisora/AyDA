@@ -1,115 +1,97 @@
-#Este programa genera un arreglo de tamaño n ya sea en orden ascendente, descendente o aleatorio (El usuario elije)
-#Después ordena ese mismo arreglo usando insertion sort y cuenta el número de operaciones (intercabios) que se realizan para obtener el arreglo ordenado
-#Todo esto sucede 10 veces
-
-import random
 import numpy as np
+#
 import matplotlib.pyplot as plt
 
-#Devuelve una lista de enteros de tamaño n en orden ascendente
+# Devuelve una lista de enteros de tamaño n en orden ascendente
 def bestA(n):
-	lista = []
-	for i in range(n):
-		lista.append(i)
-	
-	return lista
+    return list(range(n))	#Devuelve un objeto de tipo list con número ordenados ascendentemente
 
-#Devuelve una lista de enteros de tamaño n en orden descendente
+# Devuelve una lista de enteros de tamaño n en orden descendente
 def worstA(n):
-	lista = []
-	for i in range(n):
-		lista.insert(0, i) #Insertamos un valor en el índice deseado, en este caso en el índice 0
-	
-	return lista
+    return list(range(n, 0, -1))	#Devuelve una lista con números ordenados descendentemente
 
-#Decuelve una lista de enteros (generados y ordenados aleatoriamente) de tamaño n
+# Devuelve una lista de enteros (generados y ordenados aleatoriamente) de tamaño n
 def randomA(n):
-	lista = []
-	for i in range(0, n):
-		numAleatorio = random.randint(1,1000)	#Genera un número aleatorio entre 1 y 1000
-		lista.append(numAleatorio)
-	return lista
+    return list(np.random.randint(1, 1001, size=n))	#Devuelve una lista de números aleatorios
 
-#Ordena una lista
+# Ordena una lista y cuenta el número de operaciones relevantes (intercambios)
 def insertionSort(lista):
-	n = len(lista)
-	contOperaciones = 0
-	for j in range(1, n):	#Empezamos a evaluar desde el segundo dato de la lista
-		aux = lista[j]		#Se asigna el valor del elemento de la lista que está siendo evaluado a la variable aux
-		contOperaciones += 1	#Contamos las operaciones relevantes, en este caso es el cambio de índice
-		i = j-1				#Índice del elemento anterior al elemento de la lista que está siendo evaluado
-		while aux < lista[i] and i>=0:
-			lista[i+1] = lista[i]
-			contOperaciones += 1	#Contamos las operaciones relevantes, en este caso son las asignaciones
-			i -= 1
-		lista[i+1] = aux
-		contOperaciones += 1 #Contamos las operaciones relevantes, en este caso son las asignaciones
-	return contOperaciones
+    n = len(lista)
+    contOperaciones = 0
+    for j in range(1, n):  # Empezamos a evaluar desde el segundo dato de la lista
+        aux = lista[j]  # Se asigna el valor del elemento de la lista que está siendo evaluado a la variable aux
+        contOperaciones += 1  # Contamos las operaciones relevantes, en este caso es el cambio de índice
+        i = j - 1  # Índice del elemento anterior al elemento de la lista que está siendo evaluado
+        while i >= 0 and aux < lista[i]:
+            lista[i + 1] = lista[i]
+            contOperaciones += 1  # Contamos las operaciones relevantes, en este caso son las asignaciones
+            i -= 1
+        lista[i + 1] = aux
+        contOperaciones += 1  # Contamos las operaciones relevantes, en este caso son las asignaciones
+    return contOperaciones
 
-#Muestra el contenido de una lista
-def showList(lista):
-	for number in A:
-		print(number, end = " ")
+# Tamaños de arreglos
+tamaños = list(range(10, 110, 10))	#Devuelve una lista equivalente a [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+#tamaños = list[10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
 
-#n = int(10)	#Cant de enteros que habrá en los arreglos
-n = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
-n2 = n
-tiempoEjecucionesMejor = []
-tiempoEjecucionesPeor = []
-# tiempoEjecucionesPromedio = []
+# Inicialización de matrices para almacenar el número de operaciones
+tiempoEjecucionesMejor = np.zeros((10, 10))
+tiempoEjecucionesPeor = np.zeros((10, 10))
+tiempoNumAleatorios = np.zeros((10, 10))
 
-for n in n:
-	totalOperaciones = 0
-	A = bestA(n)
-	print("\n\nArreglo antes de ser ordenado")
-	showList(A)				
-	totalOperaciones += insertionSort(A)
-	print("\nArreglo después de ser ordenado")
-	showList(A)
-	tiempoEjecucionesMejor.append(totalOperaciones)
-				
-	print("\n\nSe han realizado ", totalOperaciones, "operaciones\n")
-			
-n = n2
-for n in n:
-	totalOperaciones = 0
-	A = worstA(n)
-	print("\nArreglo antes de ser ordenado")
-	showList(A)
-					
-	totalOperaciones = totalOperaciones + insertionSort(A)
+# Ejecutar los casos y medir operaciones
+for i, n in enumerate(tamaños):
+    for j in range(10):
+        # Mejor caso
+        A = bestA(n)
+        tiempoEjecucionesMejor[i, j] = insertionSort(A) #Se añade la cantidad de operaciones al arreglo para tiempo de ejecuciones de mejor caso
+        
+        # Peor caso
+        A = worstA(n)
+        tiempoEjecucionesPeor[i, j] = insertionSort(A)	#Se añade la cantidad de operaciones al arreglo para tiempo de ejecuciones de peor caso
+        
+        # Números aleatorios
+        A = randomA(n)
+        tiempoNumAleatorios[i, j] = insertionSort(A)	#Se añade la cantidad de operaciones al arreglo para números aleatorios
 
-	print("\n\nArreglo después de ser ordenado")
-	showList(A)
-	tiempoEjecucionesPeor.append(totalOperaciones)
-	print("\n\nSe han realizado ", totalOperaciones, "operaciones\n")
-		
-# n = n2
-# for n in n:
-# 	totalOperaciones = 0
-# 	A = randomA(n)
-# 	print("\n\nArreglo antes de ser ordenado")
-# 	showList(A)
-					
-# 	totalOperaciones = totalOperaciones + insertionSort(A)
+# # Convertir resultados a DataFrame
+# df_mejor = pd.DataFrame(tiempoEjecucionesMejor, columns=[f'Ejecución {i+1}' for i in range(10)], index=tamaños)
+# df_mejor.index.name = 'Tamaño'
+# df_mejor.columns.name = 'Mejor Caso'
 
-# 	print("\nArreglo después de ser ordenado")
-# 	showList(A)
-# 	tiempoEjecucionesPromedio.append(totalOperaciones)
-# 	print("\n\nSe han realizado ", totalOperaciones, "operaciones\n")
+# df_peor = pd.DataFrame(tiempoEjecucionesPeor, columns=[f'Ejecución {i+1}' for i in range(10)], index=tamaños)
+# df_peor.index.name = 'Tamaño'
+# df_peor.columns.name = 'Peor Caso'
 
-n = n2
-#Graficar resultados
-plt.figure(figsize=(10, 6))
+# df_promedio = pd.DataFrame(tiempoNumAleatorios, columns=[f'Ejecución {i+1}' for i in range(10)], index=tamaños)
+# df_promedio.index.name = 'Tamaño'
+# df_promedio.columns.name = 'Caso Promedio'
 
-plt.plot(n, tiempoEjecucionesMejor, marker='o', label='Mejor caso')
-plt.plot(n, tiempoEjecucionesPeor, marker='o', label='Peor caso')
-# plt.plot(n, tiempoEjecucionesPeor, marker='o', label='Promedio')
+# # Guardar DataFrames a un archivo de Excel
+# with pd.ExcelWriter('resultados_insertion_sort.xlsx') as writer:
+#     df_mejor.to_excel(writer, sheet_name='Mejor Caso')
+#     df_peor.to_excel(writer, sheet_name='Peor Caso')
+#     df_promedio.to_excel(writer, sheet_name='Caso Promedio')
+
+# Graficar resultados
+plt.figure(figsize=(12, 8))
+
+# Mejor caso
+for j in range(10):
+    plt.plot(tamaños, tiempoEjecucionesMejor[:, j], marker='o', linestyle='-', label=f'Mejor caso - Ejecución {j+1}' if j == 0 else "")
+
+# Peor caso
+for j in range(10):
+    plt.plot(tamaños, tiempoEjecucionesPeor[:, j], marker='x', linestyle='--', label=f'Peor caso - Ejecución {j+1}' if j == 0 else "")
+
+# Caso promedio
+for j in range(10):
+    plt.plot(tamaños, tiempoNumAleatorios[:, j], marker='s', linestyle=':', label=f'Números aleatorios - Ejecución {j+1}' if j == 0 else "")
 
 plt.xlabel('Cantidad de datos')
 plt.ylabel('Cantidad de instrucciones ejecutadas')
-plt.title('Tiempo de ejecución de Insertion Sort')
-plt.xticks(n)
+plt.title('Número de operaciones del algoritmo de Insertion Sort')
+plt.xticks(tamaños)
 plt.legend()
 plt.grid(True)
 plt.show()

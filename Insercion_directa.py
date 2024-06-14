@@ -1,5 +1,5 @@
 import numpy as np
-#
+import pandas as pd
 import matplotlib.pyplot as plt
 
 # Devuelve una lista de enteros de tamaño n en orden ascendente
@@ -54,24 +54,24 @@ for i, n in enumerate(tamaños):
         A = randomA(n)
         tiempoNumAleatorios[i, j] = insertionSort(A)	#Se añade la cantidad de operaciones al arreglo para números aleatorios
 
-# # Convertir resultados a DataFrame
-# df_mejor = pd.DataFrame(tiempoEjecucionesMejor, columns=[f'Ejecución {i+1}' for i in range(10)], index=tamaños)
-# df_mejor.index.name = 'Tamaño'
-# df_mejor.columns.name = 'Mejor Caso'
+# Convertir resultados a DataFrame
+df_mejor = pd.DataFrame(tiempoEjecucionesMejor, columns=[f'Ejecución {i+1}' for i in range(10)], index=tamaños)
+df_mejor.index.name = 'Tamaño'
+df_mejor.columns.name = 'Mejor Caso'
 
-# df_peor = pd.DataFrame(tiempoEjecucionesPeor, columns=[f'Ejecución {i+1}' for i in range(10)], index=tamaños)
-# df_peor.index.name = 'Tamaño'
-# df_peor.columns.name = 'Peor Caso'
+df_peor = pd.DataFrame(tiempoEjecucionesPeor, columns=[f'Ejecución {i+1}' for i in range(10)], index=tamaños)
+df_peor.index.name = 'Tamaño'
+df_peor.columns.name = 'Peor Caso'
 
-# df_promedio = pd.DataFrame(tiempoNumAleatorios, columns=[f'Ejecución {i+1}' for i in range(10)], index=tamaños)
-# df_promedio.index.name = 'Tamaño'
-# df_promedio.columns.name = 'Caso Promedio'
+df_promedio = pd.DataFrame(tiempoNumAleatorios, columns=[f'Ejecución {i+1}' for i in range(10)], index=tamaños)
+df_promedio.index.name = 'Tamaño'
+df_promedio.columns.name = 'Números aleatorios'
 
-# # Guardar DataFrames a un archivo de Excel
-# with pd.ExcelWriter('resultados_insertion_sort.xlsx') as writer:
-#     df_mejor.to_excel(writer, sheet_name='Mejor Caso')
-#     df_peor.to_excel(writer, sheet_name='Peor Caso')
-#     df_promedio.to_excel(writer, sheet_name='Caso Promedio')
+# Guardar DataFrames a un archivo de Excel
+with pd.ExcelWriter('resultados_insertion_sort.xlsx') as writer:
+    df_mejor.to_excel(writer, sheet_name='Mejor Caso')
+    df_peor.to_excel(writer, sheet_name='Peor Caso')
+    df_promedio.to_excel(writer, sheet_name='Números aleatorios')
 
 # Graficar resultados
 plt.figure(figsize=(12, 8))

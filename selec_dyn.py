@@ -2,14 +2,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 import random
 
-# Función para generar el mejor caso
-def mejor_caso(n):
+# Función para generar el peor caso (involucra una mayor cantidad de pasos)
+def peor_caso(n):
     c = [i * 2 for i in range(n)]
     f = [i * 2 + 1 for i in range(n)]
     return c, f
 
-# Función para generar el peor caso
-def peor_caso(n):
+# Función para generar el mejor caso (involucra una menor cantidad de pasos)
+def mejor_caso(n):
     c = [0 for _ in range(n)]
     f = [i + 1 for i in range(n)]
     return c, f
@@ -53,9 +53,12 @@ def seleccion_actividades_dp(c, f):
     # Definir una función auxiliar para encontrar la actividad compatible más reciente
     def actividad_anterior_compat(actividad_actual):
         # Iterar en reversa desde la actividad actual hacia la primera actividad
+        global conteoPasosDP
         for k in range(actividad_actual - 1, -1, -1):
+            conteoPasosDP += 1
             # Si la actividad k termina antes de que comience la actividad actual, es compatible
             if actividades[k][1] <= actividades[actividad_actual][0]:
+                conteoPasosDP += 1
                 return k + 1  # Retornar el índice de la actividad compatible (ajustado para DP)
         return 0  # Si no se encuentra una actividad compatible, retornar 0
 
@@ -98,7 +101,7 @@ tiempoEjecucionesDP = np.zeros((10, 10))
 for idx, n in enumerate(tamaños):
     for run in range(10):  # Realizar 10 ejecuciones para cada tamaño
         # Algoritmo voraz
-        c, f = mejor_caso(n)
+        c, f = peor_caso(n)
         # c = [0, 1, 2]
         # f = [5, 2, 3]
         # c = [1, 3, 4, 8]
@@ -110,8 +113,8 @@ for idx, n in enumerate(tamaños):
         actividades_dp = seleccion_actividades_dp(c, f)
         tiempoEjecucionesDP[idx, run] = conteoPasosDP
         
-    print(f"Las actividades seleccionadas por el algoritmo voraz son: {actividades_voraz}")
-    print(f"Las actividades seleccionadas por el algoritmo de programación dinámica son: {actividades_dp}")
+    print(f"Actividades algoritmo voraz: {actividades_voraz}")
+    print(f"Actividades algoritmo de programación dinámica: {actividades_dp}")
 
 
 

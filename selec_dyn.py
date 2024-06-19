@@ -29,7 +29,6 @@ def selec_voraz(c, f):
     j = 0    # j es el índice de la última actividad seleccionada
     A.add(1) #A inicializado con la primera actividad
     for i in range(1, n):
-        conteoPasos += 1
         if c[i] >= f[j]:
             A.add(i + 1) #Se añade el índice, se le suma 1, para que al imprimirlo el usuario lo entienda
             j = i   #Se cambia el valor de j por el que tiene actualmente i
@@ -55,24 +54,20 @@ def seleccion_actividades_dp(c, f):
         # Iterar en reversa desde la actividad actual hacia la primera actividad
         global conteoPasosDP
         for k in range(actividad_actual - 1, -1, -1):
-            conteoPasosDP += 1
+            # conteoPasosDP += 1
             # Si la actividad k termina antes de que comience la actividad actual, es compatible
             if actividades[k][1] <= actividades[actividad_actual][0]:
-                conteoPasosDP += 1
+                # conteoPasosDP += 1
                 return k + 1  # Retornar el índice de la actividad compatible (ajustado para DP)
         return 0  # Si no se encuentra una actividad compatible, retornar 0
 
-    
-    conteoPasosDP = 0  # Inicializar el contador de pasos para la programación dinámica
-
     # Iterar sobre cada actividad desde la segunda hasta la última
     for j in range(2, n + 1):
-        conteoPasosDP += 1  # Incrementar el contador de pasos
         # Calcular el valor si se incluye la actividad j-1
         incluir_actividad = 1 + DP[actividad_anterior_compat(j - 1)]
         # Almacenar el valor máximo entre incluir la actividad j-1 o no incluirla
         DP[j] = max(DP[j - 1], incluir_actividad)
-        conteoPasosDP += 1  # Incrementar el contador de pasos
+        conteoPasosDP += 3  # Incrementar el contador de pasos
 
     conjunto_actividades = set()  # Inicializar el conjunto para almacenar las actividades seleccionadas
     j = n  # Comenzar desde la última actividad
@@ -86,6 +81,7 @@ def seleccion_actividades_dp(c, f):
         else:
             # Si la actividad j no se incluye, simplemente decrementar j
             j -= 1
+            conteoPasosDP += 1
 
     return conjunto_actividades  # Retornar el conjunto de actividades seleccionadas
 
@@ -113,21 +109,23 @@ for idx, n in enumerate(tamaños):
         actividades_dp = seleccion_actividades_dp(c, f)
         tiempoEjecucionesDP[idx, run] = conteoPasosDP
         
-    print(f"Actividades algoritmo voraz: {actividades_voraz}")
-    print(f"Actividades algoritmo de programación dinámica: {actividades_dp}")
+    print(f"\nActividades algoritmo voraz: {actividades_voraz}")
+    print(f"\nActividades algoritmo de pd: {actividades_dp}")
 
-
+    
+print(f"\nLa cantidad de pasos ejecutados por el algoritmo voraz son:\n {tiempoEjecucionesVoraz}")
+print(f"\nLa cantidad de pasos ejecutados por el algoritmo dp son:\n {tiempoEjecucionesDP}")
 
 # Graficar resultados
 plt.figure(figsize=(12, 8))
 
 # Algoritmo voraz
 for j in range(10):
-    plt.plot(tamaños, tiempoEjecucionesVoraz[:, j], marker='o', linestyle='-', label=f'Voraz - Ejecución' if j == 0 else "")
+    plt.plot(tamaños, tiempoEjecucionesVoraz[:, j], marker='o', linestyle='-', label=f'Voraz' if j == 0 else "")
 
 # Programación dinámica
 for j in range(10):
-    plt.plot(tamaños, tiempoEjecucionesDP[:, j], marker='s', linestyle=':', label=f'DP - Ejecución' if j == 0 else "")
+    plt.plot(tamaños, tiempoEjecucionesDP[:, j], marker='s', linestyle=':', label=f'DP' if j == 0 else "")
 
 plt.xlabel('Cantidad de datos')
 plt.ylabel('Cantidad de pasos ejecutados')

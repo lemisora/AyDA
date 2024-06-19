@@ -57,7 +57,7 @@ def seleccion_actividades_dp(c, f):
             # conteoPasosDP += 1
             # Si la actividad k termina antes de que comience la actividad actual, es compatible
             if actividades[k][1] <= actividades[actividad_actual][0]:
-                # conteoPasosDP += 1
+                conteoPasosDP += 1
                 return k + 1  # Retornar el índice de la actividad compatible (ajustado para DP)
         return 0  # Si no se encuentra una actividad compatible, retornar 0
 

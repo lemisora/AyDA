@@ -1,0 +1,218 @@
+\documentclass[letterpaper,11pt]{article}
+\usepackage[top=2.5cm, bottom=2.54cm, left=2.54cm, right=2.54cm]{geometry}\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{url}
+\usepackage{textcomp}
+\usepackage{parskip}
+
+\title{Sucesión de Fibonacci}
+\author{Leonardo Michel Domingo Sánchez}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\begin{abstract}
+	En este documento se resuelve la recurrencia de la sucesión de Fibonacci, además de que se comprueba que el resultado obtenido es correcto y equivalente con la recurrencia, comparándolos en resultados además de comprobar dicha equivalencia mediante el método de inducción
+\end{abstract}
+
+\section{Resolución de la recurrencia}
+Se tiene la siguiente recurrencia con sus respectivas condiciones iniciales
+
+\begin{equation}
+\begin{cases}
+\begin{aligned}
+	f_{n} &= f_{n-1} + f_{n-2} \\
+	f_{0} &= 0, \ f_{1} = 1
+\end{aligned}
+\end{cases}
+\end{equation}
+
+Para resolverla haremos cambio de variables, de la siguiente forma
+$t^{n} = f_{n}$
+
+Sustituyendo en la ecuación (1) queda como:
+\begin{equation*}
+	\begin{aligned}
+		&t^{n} = t^{n-1} + t^{n-2} \\
+		&t^{n} - t^{n-1} - t^{n-2} = 0
+	\end{aligned}
+\end{equation*}
+
+Dividiendo la ecuación entre $t^{n-2}$ se tiene:
+\begin{equation*}
+	\frac{t^{n}}{t^{n-2}} - \frac{t^{n-1}}{t^{n-2}} - \frac{t^{n-2}}{t^{n-2}} = 0
+\end{equation*}
+
+\begin{equation}
+	t^{2} - t - 1 = 0
+\end{equation}
+
+Resolviendo para $t$ se usará la fórmula general para ecuaciones cuadráticas que es la siguiente \[t = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}\] \newpage
+
+% Segunda página
+Para obtener $t$ con la fórmula se tiene que $a = 1; \ b = -1; \ c = -1$
+\begin{equation*}
+\begin{aligned}
+	t = \frac{1 \pm \sqrt{(-1)^2 - 4(1)(-1)}}{2(1)} \Rightarrow \frac{1 \pm \sqrt{1 + 4}}{2} \Rightarrow \frac{1 \pm \sqrt{5}}{2} \\
+	t_{1} = \frac{1 + \sqrt{5}}{2} \ ; \ t_{2} = \frac{1 - \sqrt{5}}{2}
+\end{aligned}	
+\end{equation*}
+
+Con esto se puede demostrar que la solución es de la forma $ U_{n} = b(\frac{1 + \sqrt{5}}{2})^{n} + d(\frac{1 - \sqrt{5}}{2})^{n} $ \smallbreak
+Para encontrar los coeficientes consideremos las condiciones iniciales de forma que:
+\begin{equation*}
+\begin{aligned}
+	0 = U_{0} = b(\frac{1 + \sqrt{5}}{2})^{0} + d(\frac{1 - \sqrt{5}}{2})^{0} \Rightarrow b(1) + d(1) \Rightarrow b + d \\
+	1 = U_{1} = b(\frac{1 + \sqrt{5}}{2})^{1} + d(\frac{1 - \sqrt{5}}{2})^{1} \Rightarrow b(\frac{1 + \sqrt{5}}{2}) + d(\frac{1 - \sqrt{5}}{2})\\
+\end{aligned}
+\end{equation*}
+
+Se obtiene el siguiente sistema de ecuaciones
+\begin{equation*}
+	\begin{cases}
+		\begin{aligned}
+			U_{0} &= b + d = 0\\
+			U_{1} &= b(\frac{1 + \sqrt{5}}{2}) + d(\frac{1 - \sqrt{5}}{2}) = 1\\
+		\end{aligned}
+	\end{cases}
+\end{equation*}
+
+Resolviendo el sistema de ecuaciones mediante el método de suma y resta
+\begin{equation*}
+	\begin{aligned}
+		-(\frac{1 + \sqrt{5}}{2})(b+d) = -(\frac{1 + \sqrt{5}}{2})(0) \Longrightarrow -b(\frac{1 + \sqrt{5}}{2}) - d(\frac{1 + \sqrt{5}}{2}) = 0 \\
+		b(\frac{1 + \sqrt{5}}{2}) + d(\frac{1 - \sqrt{5}}{2}) = 1
+	\end{aligned}
+\end{equation*}
+
+Cancelando términos semejantes nos quedamos únicamente con lo siguiente:
+\begin{equation*}
+\begin{aligned}
+	d(\frac{1 - \sqrt{5}}{2}) = 1\\
+	d(\frac{1 + \sqrt{5}}{2}) = 0
+\end{aligned}
+\end{equation*}
+
+Con lo que se tiene buscamos obtener el valor de $d$
+\begin{equation*}
+\begin{aligned}
+	d(\frac{1 - \sqrt{5} -1 - \sqrt{5}}{2}) &= 1 \ \Rightarrow \ d(\frac{-2\sqrt{5}}{2}) = 1 \\
+	d(-\sqrt{5}) &= 1 \\ d = \frac{1}{-\sqrt{5}}
+\end{aligned}
+\end{equation*}
+\newpage
+
+% Tercera página
+Obtener el valor de $b$ al sustituir el valor de $d$ en la siguiente ecuación del sistema de ecuaciones 
+\begin{equation*}
+\begin{aligned}
+	b + d =& 0 \\
+	b + (\frac{1}{-\sqrt{5}}) &= 0 \\
+	 b = \frac{1}{\sqrt{5}}
+\end{aligned}
+\end{equation*}
+
+Tras resolver el sistema de ecuaciones se tiene que
+\begin{equation*}
+	\begin{aligned}
+		b = \frac{1}{\sqrt{5}} \ ; \ d = \frac{1}{-\sqrt{5}}
+	\end{aligned}
+\end{equation*}
+
+Convirtiendo a la ecuación inicial de la recurrencia $f_{n}$ a lo obtenido con la ecuación $U_{n}$ \smallbreak
+Se obtiene lo siguiente:
+\begin{equation*}
+\begin{aligned}
+	f_{n} =& \frac{1}{\sqrt{5}} (\frac{1 + \sqrt{5}}{2})^{n} - \frac{1}{\sqrt{5}} (\frac{1 - \sqrt{5}}{2})^{n} \\
+	=& \frac{1}{\sqrt{5}} ((\frac{1 + \sqrt{5}}{2})^{n} - (\frac{1 - \sqrt{5}}{2})^{n})
+\end{aligned}
+\end{equation*}
+
+\begin{equation*}
+\begin{aligned}
+	\therefore \ f_{n} = \frac{1}{\sqrt{5}} ((\frac{1 + \sqrt{5}}{2})^{n} - (\frac{1 - \sqrt{5}}{2})^{n})
+\end{aligned}
+\end{equation*}
+
+Comprobando la equivalencia de la ecuación obtenida con la ecuación inicial recurrente comparándolos para $f_{6}$ \smallbreak
+Con recurrencia:
+\begin{equation*}
+\begin{aligned}
+	f_{2} = 1 + 0 = 1 \\
+	f_{3} = 1 + 1 = 2 \\
+	f_{4} = 2 + 1 = 3 \\
+	f_{5} = 3 + 2 = 5 \\
+	f_{6} = 5 + 3 = 8 \\
+\end{aligned}
+\end{equation*}
+
+Sin recurrencia:
+\begin{equation*}
+\begin{aligned}
+	f_{6} &= \frac{1}{\sqrt{5}} ((\frac{1 + \sqrt{5}}{2})^{6} - (\frac{1 - \sqrt{5}}{2})^{6}) \\
+	f_{6} &= 8
+\end{aligned}
+\end{equation*}
+\newpage
+
+%Cuarta página
+\section{Encontrar orden de complejidad del algoritmo}
+De acuerdo a la ecuación obtenida de $f_{n}$ encontraremos el orden de complejidad de la ecuación:
+\begin{equation*}
+\begin{aligned}
+	O(g(n)) =& O(\frac{1}{\sqrt{5}} ((\frac{1 + \sqrt{5}}{2})^{n} - (\frac{1 - \sqrt{5}}{2})^{n})) \ \Rightarrow \ O(\frac{1 + \sqrt{5}}{2})^{n}) \\
+	\therefore O(g(n)) =& O((\frac{1 + \sqrt{5}}{2})^{n})
+\end{aligned}
+\end{equation*}
+
+\section{Demostración por el método de inducción}
+Hipótesis : Se cumple que: $ f_{n} = \frac{1}{\sqrt{5}} ((\frac{1 + \sqrt{5}}{2})^{n} - (\frac{1 - \sqrt{5}}{2})^{n}) $ \smallbreak
+Caso base : Demostrar para $ n = 0$
+\begin{equation*}
+\begin{aligned}
+	f_{0} &= \frac{1}{\sqrt{5}} ((\frac{1 + \sqrt{5}}{2})^{0} - (\frac{1 - \sqrt{5}}{2})^{0}) \\
+	&= \frac{1}{\sqrt{5}} (1 - 1) = 0 \\
+	\therefore \ f_{0} &= 0
+\end{aligned}
+\end{equation*}
+
+Caso inductivo : Supongamos que se cumple
+\begin{equation}
+	f_{n} = \frac{1}{\sqrt{5}} ((\frac{1 + \sqrt{5}}{2})^{n} - (\frac{1 - \sqrt{5}}{2})^{n})
+\end{equation}
+
+\qquad\qquad Por demostrar que se cumple: $f_{n+1} = \frac{1}{\sqrt{5}} ((\frac{1 + \sqrt{5}}{2})^{n+1} - (\frac{1 - \sqrt{5}}{2})^{n+1})$ \smallbreak
+\qquad\qquad Si 
+\begin{equation*}
+\begin{aligned}
+	f_{n} = f_{n-1} ((\frac{1+\sqrt{5}}{2}) - (\frac{1-\sqrt{5}}{2}))
+\end{aligned}
+\end{equation*}
+\qquad \qquad entonces
+\begin{equation}
+\begin{aligned}
+	f_{n+1} &= f_{n}((\frac{1+\sqrt{5}}{2}) - (\frac{1-\sqrt{5}}{2}))
+\end{aligned}
+\end{equation}
+
+\qquad \qquad Sustituyendo la ecuación (3) en la ecuación (4)
+\begin{equation*}
+\begin{aligned}
+	f_{n+1} &= (\frac{1}{\sqrt{5}} ((\frac{1 + \sqrt{5}}{2})^{n} - (\frac{1 - \sqrt{5}}{2})^{n}))((\frac{1+\sqrt{5}}{2}) - (\frac{1-\sqrt{5}}{2}))\\
+	f_{n+1} &= (\frac{1}{\sqrt{5}}) ((\frac{1 + \sqrt{5}}{2})^{n+1}) - (\frac{1 - \sqrt{5}}{2})^{n+1}))
+\end{aligned}
+\end{equation*}
+\qquad Como sí se cumple queda entonces demostrado que la solución de la recurrencia que se ha obtenido sí es correcta.
+\end{document}

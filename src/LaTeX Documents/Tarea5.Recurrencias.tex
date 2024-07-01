@@ -111,14 +111,14 @@ Hasta ahora en $T(16)$ se tiene algo de la forma:
 Se puede ver el siguiente patrón:
 \begin{equation*}
 	\begin{aligned}
-		T(2^{k}) = 2^{k}*3 + \sum_{i=1}^{k}2^{i} \\
+		T(2^{k}) = 2^{k}*3 + \sum_{i=1}^{k} 2^{i} \\
 	\end{aligned}
 \end{equation*}
 
 Convertir la sumatoria para que esté en términos de la serie geométrica de la forma $\displaystyle \sum_{i=1}^{n}ar^{i-1}$
 \begin{equation*}
 	\begin{aligned}
-		\sum_{i=1}^{k}2^{i} \ \Rightarrow \ \sum_{i=2}^{k+1}2^{i-1} \\
+		\sum_{i=1}^{k}2^{i} \ \Rightarrow \ \sum_{i=1}^{k}2^{i} -2^{k} \\
 	\end{aligned}
 \end{equation*}
 

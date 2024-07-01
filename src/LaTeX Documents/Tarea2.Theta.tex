@@ -6,17 +6,17 @@
 \usepackage{amssymb}
 \usepackage{amsthm}
 \usepackage{xcolor}
-\title{Caso Theta - Complejidad de algoritmos}
+\title{Caso $\Theta$ - Complejidad de algoritmos}
 \author{Leonardo Michel Domingo Sánchez}
 \begin{document}
 \maketitle
-Demostrar que $ \frac{1}{2}n^{2} - 3n = \Theta(n^{2}) $ \smallbreak
+Demostrar que $\frac{1}{2}n^{2} - 3n = \Theta(n^{2}) $ \smallbreak
 De acuerdo a la definición formal que es la siguiente:
-\begin{equation}
+\begin{equation*}
 \begin{aligned}
 	\Theta(g(n)) \Leftrightarrow \{ T(n) \ | \ \exists c_{1},c_{2} > 0 \ y \ n_{0} \ \forall \ | n \geq n_{0} \ ; \ c_{1} g(n) \geq T(n) \geq c_{2}g(n)\}
 \end{aligned}
-\end{equation}
+\end{equation*}
 
 Para este problema se tiene: 
 \begin{itemize}
@@ -24,4 +24,43 @@ Para este problema se tiene:
     \item $ g(n) = n^{2} $
 \end{itemize}
 
+Aplicando lo que dice la definición formal se tiene la siguiente inecuación:
+\begin{equation*}
+\begin{aligned}
+    c_{1} \leq \frac{1}{2} - \frac{3}{n} \leq c_{2}
+\end{aligned}
+\end{equation*}
+Resolviendo la inecuación:
+\begin{equation*}
+    c_{1} \leq \frac{n-6}{2n} \leq c_{2} 
+\end{equation*}
+De la definición se tiene que $C_{1}, C_{2} > 0 $
+\begin{equation*}
+\begin{aligned}
+    0 < \frac{n-6}{2n} \ \Rightarrow \ 0 < n-6 \ \Rightarrow \ 6 < n \\
+    \therefore n \geq 7& \ \text{y} \ n_{0} = 6
+\end{aligned}
+\end{equation*}
+
+Encontrar las constantes
+Para $c_{1}$
+\begin{equation*}
+\begin{aligned}
+    &c_{1} \leq \frac{1}{2} - \frac{3}{7} \\
+    &c_{1} \leq \frac{7-6}{14} = \frac{1}{14} \\
+    &c_{1} \leq \frac{1}{14}
+\end{aligned}
+\end{equation*}
+
+Para $c_{2}$
+Como $n$ puede tomar cualquier valor natural entonces:
+\begin{equation*}
+\begin{aligned}
+    &\lim\limits_{n \rightarrow \infty} \Bigg(\frac{1}{2} - \frac{3}{n}\Bigg) = \frac{1}{2} \\
+    &\therefore \ c_{2} = \frac{1}{2}
+\end{aligned}
+\end{equation*}
+
+Como fue posible encontrar $n_{0} = 6$ y $\ c_{1}=\frac{1}{14}, \ c_{2} = \frac{1}{2}$
+$$\therefore \frac{1}{2}n^{2}-3n = \Theta(n^{2})$$
 \end{document}

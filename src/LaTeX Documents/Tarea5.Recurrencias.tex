@@ -130,6 +130,35 @@ Sustituyendo
 	\end{aligned}
 \end{equation*}
 
+Como $\displaystyle \sum_{i=1}^{k} 2^{i} = 2^{k} + \sum_{i=1}^{k} 2^{i-1}$ entonces
+\begin{equation*}
+\begin{aligned}
+	\sum_{i=1}^{k} 2^{i}=2^{k+1}-1
+\end{aligned}
+\end{equation*}
+
+Sustituyendo en $T(n)=T(2^k)$
+\begin{equation*}
+\begin{aligned}
+	T(2^{k}) = 2^{k}*3 + 2^{k+1} - 1 \\
+	\text{Como $n=2^{k}$ entonces $k=log_{2}n$} \\
+	\therefore \ T(n)=2^{log_{2}n}*3+2^{(log_{2}n)+1}-1
+\end{aligned}
+\end{equation*}
+Comprobando para T(16) \smallbreak
+Con recurrencia:
+\begin{equation*}
+\begin{aligned}
+	&T(1) = 3\\
+	&T(2) = 2 + 2(3) = 8 \\
+	&T(4) = 2 + 2(8) = 18 \\
+	&T(8) = 2 + 2(18) = 38 \\
+	&T(16) = 2 + 2(38) = 78 \\
+\end{aligned}
+\end{equation*}
+\qquad Sin recurrencia: \smallbreak
+$T(16) = 2^{4}\cdot3+2^{5}-1=16\cdot3+32-1=48+31=79$
+
 \newpage
 \subsection{Resolviendo la segunda recurrencia}
 \begin{equation*}
@@ -141,5 +170,14 @@ Sustituyendo
 		\end{aligned}
 	\end{cases}
 \end{equation*}
+Verificar valores de $n$ que tienen sentido en la recurrencia
+\begin{itemize}
+	\item Para $n=1$ tiene sentido ya que está definido
+	\item Para $n=2$ tiene sentido
+	\item Para $n=3$ tiene sentido
+	\item Para $n=4$ tiene sentido
+	\item Para $n=5$ tiene sentido
+	\item Para $n=6$ tiene sentido
+\end{itemize}
 
 \end{document}
